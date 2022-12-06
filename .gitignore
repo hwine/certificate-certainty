@@ -62,3 +62,6 @@ MANIFEST
 .venv*/
 .conda*/
 .python-version
+
+# GitHub inclusions
+!.github
