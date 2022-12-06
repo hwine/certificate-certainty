@@ -39,20 +39,20 @@ repos:
   - id: isort
 
 - repo: https://github.com/psf/black
-  rev: stable
+  rev: 22.10.0
   hooks:
   - id: black
     language_version: python3
 
 # If like to embrace black styles even in the docs:
 - repo: https://github.com/asottile/blacken-docs
-  rev: v1.12.0
+  rev: v1.12.1
   hooks:
   - id: blacken-docs
     additional_dependencies: [black]
 
 - repo: https://github.com/PyCQA/flake8
-  rev: 4.0.1
+  rev: 6.0.0
   hooks:
   - id: flake8
     args: [--ignore, E501]  # let black deal with line lengths
@@ -79,7 +79,7 @@ repos:
       exclude: .*/tests/.*
 
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v3.3.0
+    rev: v3.3.1
     hooks:
     -   id: pyupgrade
         args: ["--py310-plus"]
