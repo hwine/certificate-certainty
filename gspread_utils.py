@@ -6,12 +6,6 @@
 # - `sheet`: a "tab" in the `spreadsheet` document
 # - _IDs_: no api found yet, best to use numeric ids discovered from the URL
 
-# spreadsheet_to_use = "Copy of Certificate Certainty Report"
-
-# sheet names
-sheet_current = "Current"
-sheet_history = "History"
-
 # Import from stdlib
 from dataclasses import dataclass
 
@@ -21,7 +15,9 @@ from gspread.spreadsheet import Spreadsheet
 from gspread.worksheet import Worksheet
 from oauth2client.service_account import ServiceAccountCredentials
 
-# TypeVar for methods returning self
+# sheet names
+sheet_current = "Current"
+sheet_history = "History"
 
 
 @dataclass()
