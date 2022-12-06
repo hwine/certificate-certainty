@@ -1,29 +1,87 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
-repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
-    hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: check-ast
-    -   id: check-yaml
-    -   id: check-added-large-files
-    -   id: check-case-conflict
-    -   id: check-docstring-first
-    -   id: check-merge-conflict
-    -   id: check-toml
+exclude: '^docs/conf.py'
 
--   repo: https://github.com/psf/black
-    rev: 22.10.0
-    hooks:
-    -   id: black
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+  -   id: check-added-large-files
+  -   id: check-ast
+  -   id: check-case-conflict
+  -   id: check-docstring-first
+  -   id: check-json
+  -   id: check-merge-conflict
+  -   id: check-toml
+  -   id: check-xml
+  -   id: check-yaml
+  -   id: debug-statements
+  -   id: end-of-file-fixer
+  -   id: mixed-line-ending
+      args: ['--fix=auto']  # replace 'auto' with 'lf' to enforce Linux/Mac line endings or 'crlf' for Windows
+  -   id: requirements-txt-fixer
+  -   id: trailing-whitespace
+
+## If you want to avoid flake8 errors due to unused vars or imports:
+# - repo: https://github.com/myint/autoflake
+#   rev: v1.4
+#   hooks:
+#   - id: autoflake
+#     args: [
+#       --in-place,
+#       --remove-all-unused-imports,
+#       --remove-unused-variables,
+#     ]
+
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+  - id: isort
+
+- repo: https://github.com/psf/black
+  rev: stable
+  hooks:
+  - id: black
+    language_version: python3
+
+# If like to embrace black styles even in the docs:
+- repo: https://github.com/asottile/blacken-docs
+  rev: v1.12.0
+  hooks:
+  - id: blacken-docs
+    additional_dependencies: [black]
+
+- repo: https://github.com/PyCQA/flake8
+  rev: 4.0.1
+  hooks:
+  - id: flake8
+  ## You can add flake8 plugins via `additional_dependencies`:
+  #  additional_dependencies: [flake8-bugbear]
+
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.4
+  hooks:
+    - id: bandit
+      args: [--skip, B101]
+
+- repo: https://github.com/myint/docformatter
+  rev: v1.5.0
+  hooks:
+    - id: docformatter
+      args: [--in-place]
+
+- repo: https://github.com/Yelp/detect-secrets
+  rev: "v1.4.0"
+  hooks:
+    - id: detect-secrets
+      args: ['--baseline', '.secrets.baseline']
+      exclude: .*/tests/.*
 
 -   repo: https://github.com/asottile/pyupgrade
     rev: v3.3.0
     hooks:
     -   id: pyupgrade
-        args: ["--py36-plus"]
+        args: ["--py310-plus"]
 
 - repo: https://github.com/jumanjihouse/pre-commit-hooks
   rev: 3.0.0  # or specific git tag
@@ -46,27 +104,3 @@ repos:
       # we ignore the "pin versions for apt & pip"
       args: [ --ignore, DL3008, --ignore, DL3013 ]
       exclude: .*\.dockerignore
-
-- repo: https://github.com/PyCQA/bandit
-  rev: 1.7.4
-  hooks:
-    - id: bandit
-
-- repo: https://github.com/myint/docformatter
-  rev: v1.5.0
-  hooks:
-    - id: docformatter
-      args: [--in-place]
-
-- repo: https://gitlab.com/iamlikeme/nbhooks
-  rev: "1.0.0"
-  hooks:
-  - id: nb-ensure-clean
-    #args: [--meta, ExecuteTime]  # Optional blacklist of metadata keys (you can use regex)
-
-- repo: https://github.com/Yelp/detect-secrets
-  rev: "v1.4.0"
-  hooks:
-    - id: detect-secrets
-      args: ['--baseline', '.secrets.baseline']
-      exclude: .*/tests/.*
