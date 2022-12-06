@@ -2,11 +2,10 @@
 
 import datetime
 import logging
-from pprint import pprint
-from typing import Generator
+from collections.abc import Generator
 
-import simplematch as sm
 import pydantic
+import simplematch as sm
 import typer
 
 # TODO: put into __init__ file and managed by a tool

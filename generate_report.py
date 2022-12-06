@@ -7,22 +7,21 @@ This is done by
 - moving all handled data to the "History" worksheet
 """
 
-from pathlib import Path
-from datetime import datetime, timedelta
 import json
 import os
 import shutil
+from datetime import datetime, timedelta
+from pathlib import Path
 
-from google.cloud import storage
-from google.api_core.page_iterator import HTTPIterator
-from google.cloud.storage.blob import Blob
-import typer
 import dtyper
+import typer
+from google.api_core.page_iterator import HTTPIterator
+from google.cloud import storage
+from google.cloud.storage.blob import Blob
 
 import gspread_utils
-from gspread_utils import RowRecord, Spreadsheet, open_spreadsheet, Worksheet, SheetData
 import merge_jobs
-
+from gspread_utils import RowRecord, SheetData, Spreadsheet, open_spreadsheet
 
 # globals (common prefix allows grouping in debugger)
 g_spreadsheet: Spreadsheet
@@ -72,9 +71,6 @@ def _shared_options(
     g_cutoff_date = report_date
     global g_as_of_date
     g_as_of_date = as_of_date
-
-
-from google.cloud import storage
 
 
 # from https://cloud.google.com/storage/docs/listing-objects#prereq-code-samples
@@ -369,6 +365,7 @@ def update(
     )  # nosec -- used to help static typing analysis
 
     # Append the new history
+    global g_spreadsheet
     gspread_utils.append_history_sheet(g_spreadsheet, g_additional_history, g_today)
 
     # Replace the current

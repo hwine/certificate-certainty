@@ -9,10 +9,8 @@ import time
 from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from enum import Enum, unique
-from hashlib import new
-from operator import is_
 from pathlib import Path
-from typing import Any, Iterable, Optional
+from typing import Any
 
 import bs4
 import pydantic
@@ -78,7 +76,7 @@ class DecomState(str, Enum):
 # Exemptions are maintained in an external yaml file
 class HostExemption(BaseModel):
     hostname: str
-    bug: Optional[pydantic.AnyHttpUrl]
+    bug: pydantic.AnyHttpUrl | None
     state: DecomState
     current_cert_expiration: date
     notes: str = ""
@@ -122,7 +120,7 @@ def fetch_data(domain: str):
 
 def extract_data_from_page(
     resp: requests.Response, domain: str
-) -> Optional[bs4.element.Tag]:
+) -> bs4.element.Tag | None:
     """extract_data_from_page Find certificate info embedded in the page.
 
     Locate & return the HTML `table` element with the certificate information.
@@ -202,7 +200,7 @@ class CertStatus(BaseModel):
     renewal_issued: bool = False
     renewal_deployed: bool = False
     unreachable_host: bool = False
-    current_deployed_expiration: Optional[datetime] = None
+    current_deployed_expiration: datetime | None = None
     expirations: set[date] = set()
     issuer: str = ""
 
@@ -360,7 +358,7 @@ def certificate_of_interest(entry: HostCertData) -> bool:
 def find_potentially_expiring_certs(
     info: set[HostCertData],
     warning_date: date,
-    exemptions_file: Optional[Path],
+    exemptions_file: Path | None,
 ) -> StatusByName:
 
     status = StatusByName(warning_date)
@@ -521,7 +519,7 @@ class HashableDict(dict):
 
 
 def report_un_deployed(
-    status: Optional[StatusByName], dig_it: bool = False, json_output: bool = False
+    status: StatusByName | None, dig_it: bool = False, json_output: bool = False
 ):
     """report_un_deployed Report those hosts which need intervention.
 
@@ -619,7 +617,7 @@ _current_seed: str = ""
 
 
 def host_of_interest(
-    host: str, exemptions: Optional[Path] = None, certID: int = 0
+    host: str, exemptions: Path | None = None, certID: int = 0
 ) -> bool:
     """host_of_interest determine if we care about host.
 
@@ -645,7 +643,7 @@ def host_of_interest(
     if not len(_exemptions_data) and exemptions:
         try:
             _exemptions_data = yaml.safe_load(open(exemptions))
-        except OSError as e:
+        except OSError:
             logger.warning(f"Couldn't open '{exemptions}', no exemptions will be used")
             _exemptions_data["hosts_to_skip"] = set()
             _exemptions_data["domains_to_skip"] = set()
@@ -671,7 +669,7 @@ def host_of_interest(
         host.endswith(tuple(_exemptions_data["domains_to_skip"]))
         or host in _exemptions_data["hosts_to_skip"]
     )
-    if ignore and not host in _exemptions_data["reported"]:
+    if ignore and host not in _exemptions_data["reported"]:
         logger.info(f'ignoring host {host} per {_exemptions_data["file_name"]}')
         # TODO: save off exemption type with host
         _exemptions_data["reported"].add(host)
@@ -716,7 +714,7 @@ def main(
     if in_file:
         try:
             domain = open(in_file).read().split()
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             msg = f"--in-file value does not exist: '{in_file}'"
             logger.error(msg)
             typer.echo(msg)

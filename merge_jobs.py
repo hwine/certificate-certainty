@@ -10,9 +10,8 @@ Current merge:
 """
 
 
-from pathlib import Path
-from datetime import datetime, timedelta
 import json
+from pathlib import Path
 
 import typer
 
@@ -46,7 +45,4 @@ def main(files: list[Path] = typer.Argument(None)):
 
 
 if __name__ == "__main__":
-    ## from dotenv import load_dotenv
-
-    ## load_dotenv(Path("config.env"))
     typer.run(main)
