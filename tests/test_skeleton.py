@@ -4,7 +4,7 @@ from certificate_certainty.skeleton import fib, main
 
 __author__ = "Hal Wine"
 __copyright__ = "Hal Wine"
-__license__ = "MPL-2.0"
+__license__ = "Apache-2.0"
 
 
 def test_fib():

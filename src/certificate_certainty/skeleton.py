@@ -27,7 +27,7 @@ from certificate_certainty import __version__
 
 __author__ = "Hal Wine"
 __copyright__ = "Hal Wine"
-__license__ = "MPL-2.0"
+__license__ = "Apache-2.0"
 
 _logger = logging.getLogger(__name__)
 

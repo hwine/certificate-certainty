@@ -1,8 +1,24 @@
+<!-- These are examples of badges you might want to add to your README:
+     please update the URLs accordingly
+
+[![Built Status](https://api.cirrus-ci.com/github/<USER>/certificate-certainty.svg?branch=main)](https://cirrus-ci.com/github/<USER>/certificate-certainty)
+[![ReadTheDocs](https://readthedocs.org/projects/certificate-certainty/badge/?version=latest)](https://certificate-certainty.readthedocs.io/en/stable/)
+[![Coveralls](https://img.shields.io/coveralls/github/<USER>/certificate-certainty/main.svg)](https://coveralls.io/r/<USER>/certificate-certainty)
+[![PyPI-Server](https://img.shields.io/pypi/v/certificate-certainty.svg)](https://pypi.org/project/certificate-certainty/)
+[![Conda-Forge](https://img.shields.io/conda/vn/conda-forge/certificate-certainty.svg)](https://anaconda.org/conda-forge/certificate-certainty)
+[![Monthly Downloads](https://pepy.tech/badge/certificate-certainty/month)](https://pepy.tech/project/certificate-certainty)
+[![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Twitter)](https://twitter.com/certificate-certainty)
+-->
+
+[![Project generated with PyScaffold](https://img.shields.io/badge/-PyScaffold-005CA0?logo=pyscaffold)](https://pyscaffold.org/)
+
+# certificate-certainty
 # Purpose
 
-The purpose of this tooling is to automate the detection of expiring certs, and
-then check if the renewal has been generated and deployed. Ultimately, tickets
-will be automatically opened.
+> The purpose of this tooling is to automate the detection of expiring certs,
+> and then check if the renewal has been generated and deployed. Ultimately,
+> tickets will be automatically opened.
+
 
 # Approach
 
@@ -176,3 +192,11 @@ sleep 60
 ```
 
 [pydantic]: https://pydantic-docs.helpmanual.io/
+
+
+<!-- pyscaffold-notes -->
+
+## Note
+
+This project has been set up using PyScaffold 4.3.1. For details and usage
+information on PyScaffold see https://pyscaffold.org/.
